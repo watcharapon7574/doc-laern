@@ -140,6 +140,28 @@ ${lovablePrompt}`;
       </motion.p>
 
       <motion.div
+        className="mb-8 bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-300 rounded-2xl p-8 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <h3 className="text-3xl font-bold text-slate-800 mb-4 flex items-center justify-center gap-3">
+          💡 ยังไม่มีไอเดีย?
+        </h3>
+        <p className="text-slate-700 text-lg mb-4">
+          ไปดูไอเดียเกมที่ Section 4 เพื่อหาแรงบันดาลใจ!
+        </p>
+        <motion.a
+          href="#section4"
+          className="inline-block px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-full hover:shadow-xl transition-all"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          ดูไอเดียเกม →
+        </motion.a>
+      </motion.div>
+
+      <motion.div
         className="bg-gradient-to-br from-orange-100 to-red-100 border border-orange-300 rounded-2xl p-8 mb-6"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

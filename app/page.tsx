@@ -5,13 +5,15 @@ import Section1Slide from '@/components/Section1Slide';
 import Section2Examples from '@/components/Section2Examples';
 import Section3Ideas from '@/components/Section3Ideas';
 import Section4Form from '@/components/Section4Form';
+import Section5References from '@/components/Section5References';
 
 export default function Home() {
   const sections = [
     { id: 'section1', title: 'สไลด์นำเสนอ', bgColor: 'from-blue-500 to-purple-600' },
     { id: 'section2', title: 'ตัวอย่างเกม', bgColor: 'from-purple-600 to-pink-600' },
-    { id: 'section3', title: 'ไอเดียเกม', bgColor: 'from-pink-600 to-red-600' },
-    { id: 'section4', title: 'สร้างเกมของคุณ', bgColor: 'from-red-600 to-orange-600' },
+    { id: 'section3', title: 'สร้างเกมของคุณ', bgColor: 'from-pink-600 to-red-600' },
+    { id: 'section4', title: 'ไอเดียเกม', bgColor: 'from-red-600 to-orange-600' },
+    { id: 'section5', title: 'แหล่งอ้างอิง', bgColor: 'from-orange-600 to-yellow-600' },
   ];
 
   return (
@@ -100,19 +102,47 @@ export default function Home() {
         <Section2Examples />
       </section>
 
-      {/* Section 3: Game Ideas */}
+      {/* Section 3: Form */}
       <section id="section3" className="min-h-screen py-20 px-4 bg-gradient-to-br from-pink-50 to-red-50">
-        <Section3Ideas />
-      </section>
-
-      {/* Section 4: Form */}
-      <section id="section4" className="min-h-screen py-20 px-4 bg-gradient-to-br from-red-50 to-orange-50">
         <Section4Form />
       </section>
 
+      {/* Section 4: Game Ideas */}
+      <section id="section4" className="min-h-screen py-20 px-4 bg-gradient-to-br from-red-50 to-orange-50">
+        <Section3Ideas />
+      </section>
+
+      {/* Section 5: References */}
+      <section id="section5" className="min-h-screen py-20 px-4 bg-gradient-to-br from-orange-50 to-yellow-50">
+        <Section5References />
+      </section>
+
       {/* Footer */}
-      <footer className="bg-white border-t border-slate-200 py-8 text-center text-slate-600">
-        <p>สร้างด้วย Next.js + Framer Motion</p>
+      <footer className="bg-white border-t border-slate-200 py-12 text-center">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="space-y-3"
+          >
+            <p className="text-slate-800 font-semibold text-lg">
+              พัฒนาและออกแบบโดย
+            </p>
+            <p className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              ครูวัชรพล
+            </p>
+            <p className="text-slate-600 flex items-center justify-center gap-2">
+              <span>📞</span>
+              <a href="tel:0925717574" className="hover:text-blue-600 transition-colors">
+                092-571-7574
+              </a>
+            </p>
+            <p className="text-slate-500 text-sm mt-4">
+              เว็บไซต์นี้ถูกสร้างด้วย Next.js, TypeScript, Tailwind CSS และ Framer Motion
+            </p>
+          </motion.div>
+        </div>
       </footer>
     </main>
   );

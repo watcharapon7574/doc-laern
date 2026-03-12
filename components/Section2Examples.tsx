@@ -25,6 +25,7 @@ export default function Section2Examples() {
         "ระบบคะแนน: หักคะแนนเมื่อตอบผิด เพื่อเพิ่มความท้าทาย",
         "Cloud Sync: บันทึกข้อมูลสถิติลง Lovable Cloud อัตโนมัติ"
       ],
+      demoUrl: "https://thai-num-match.lovable.app/",
       color: "from-blue-500 to-cyan-500"
     },
     {
@@ -44,6 +45,7 @@ export default function Section2Examples() {
       ],
       database: "บันทึกข้อมูล: ด่านที่ผ่าน, คะแนนสูงสุด, เวลาเร็วที่สุด, จำนวนครั้งที่โดนสิงโต, และสถิติการเล่นแต่ละด่าน",
       improvements: [],
+      demoUrl: "https://fruit-quest-chase.lovable.app/",
       color: "from-green-500 to-emerald-500"
     },
     {
@@ -63,6 +65,7 @@ export default function Section2Examples() {
       ],
       database: "บันทึกข้อมูล: คะแนนสูงสุดในแต่ละด่าน, เวลาเร็วที่สุด, จำนวนครั้งที่พลิกการ์ด, และอัตราความแม่นยำในการจับคู่",
       improvements: [],
+      demoUrl: "https://fruit-flip-fun.lovable.app/",
       color: "from-purple-500 to-pink-500"
     }
   ];
@@ -115,10 +118,26 @@ export default function Section2Examples() {
             className={`bg-gradient-to-r ${example.color} p-1 rounded-2xl`}
           >
             <div className="bg-white rounded-2xl p-6">
-              <h3 className="text-3xl font-bold text-slate-800 mb-3">
-                {example.title}
-              </h3>
-              <p className="text-slate-600 text-lg mb-4">{example.description}</p>
+              <div className="flex justify-between items-start mb-3 gap-4">
+                <div>
+                  <h3 className="text-3xl font-bold text-slate-800 mb-2">
+                    {example.title}
+                  </h3>
+                  <p className="text-slate-600 text-lg">{example.description}</p>
+                </div>
+                {example.demoUrl && (
+                  <motion.a
+                    href={example.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-xl hover:shadow-xl flex items-center gap-2 shrink-0 mt-1"
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    🎮 ทดลองเล่น
+                  </motion.a>
+                )}
+              </div>
 
               <div className="mb-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <h4 className="text-xl font-semibold text-blue-700 mb-2 flex items-center gap-2">
@@ -141,7 +160,7 @@ export default function Section2Examples() {
                 <p className="text-slate-700">{example.content}</p>
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4 bg-green-50 border border-green-200 rounded-lg p-4">
                 <h4 className="text-xl font-semibold text-green-700 mb-2">🎨 องค์ประกอบ UI</h4>
                 <ul className="text-slate-700 space-y-1">
                   {example.uiComponents.map((component, i) => (

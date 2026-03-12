@@ -227,20 +227,6 @@ export default function Section3Ideas() {
         ))}
       </div>
 
-      <motion.div
-        className="mt-12 bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-300 rounded-2xl p-8"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
-        <h3 className="text-3xl font-bold text-slate-800 mb-4 text-center flex items-center justify-center gap-3">
-          <RocketIcon size={36} className="text-purple-600" />
-          พร้อมสร้างเกมของคุณแล้วหรือยัง?
-        </h3>
-        <p className="text-slate-700 text-center text-lg">
-          เลือกไอเดียที่ชอบแล้วไปที่ Section 4 เพื่อเริ่มสร้างเกมกันเลย!
-        </p>
-      </motion.div>
     </motion.div>
   );
 }
