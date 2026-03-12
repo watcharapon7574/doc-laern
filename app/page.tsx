@@ -50,8 +50,24 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
+          {/* Logo - ไม่มีการ์ด ขนาดใหญ่ */}
+          <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="mb-8 flex justify-center"
+          >
+            <motion.img
+              src="/laern-space.png?v=3"
+              alt="AI EDUGAME ONLINE - Laern Space"
+              className="w-[960px] h-auto md:w-[1800px] md:h-auto object-contain max-w-full"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            />
+          </motion.div>
+
           <motion.h1
-            className="text-6xl md:text-8xl font-bold text-white mb-6"
+            className="text-2xl md:text-4xl font-bold text-white mb-6"
             animate={{
               backgroundImage: [
                 'linear-gradient(45deg, #f093fb 0%, #f5576c 100%)',
