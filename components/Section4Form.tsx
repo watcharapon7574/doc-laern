@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { TargetIcon, CopyIcon, CheckIcon, InfoIcon } from './icons';
 
 export default function Section4Form() {
@@ -31,6 +31,7 @@ export default function Section4Form() {
   });
 
   const [copied, setCopied] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
 
   const lovablePrompt = `# Technical Requirements
 
@@ -114,258 +115,320 @@ ${lovablePrompt}`;
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="container mx-auto max-w-4xl"
-    >
-      <motion.h2
-        className="text-5xl font-bold text-slate-800 mb-4 text-center flex items-center justify-center gap-3"
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-      >
-        <TargetIcon size={48} className="text-blue-600" />
-        สร้างเกมของคุณ
-      </motion.h2>
+    <>
+      {/* Image Modal */}
+      <AnimatePresence>
+        {showImageModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+            onClick={() => setShowImageModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: 'spring', damping: 20 }}
+              className="relative max-w-6xl max-h-[90vh] overflow-auto bg-white rounded-2xl shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setShowImageModal(false)}
+                className="sticky top-4 right-4 float-right z-10 bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold shadow-lg"
+              >
+                ✕
+              </button>
+              <img
+                src="/doc/S__166043725.jpg"
+                alt="หน่วยการเรียนรู้ทั้งหมด (ขนาดเต็ม)"
+                className="w-full h-auto"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      <motion.p
-        className="text-center text-slate-600 text-lg mb-8"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-      >
-        กรอกรายละเอียดเกมของคุณ แล้วคัดลอกไปวางที่ <span className="text-blue-600 font-bold">lovable.dev</span>
-      </motion.p>
-
-      {/* Learning Units Categories */}
       <motion.div
-        className="mb-8 bg-gradient-to-br from-cyan-50 to-blue-50 border border-cyan-300 rounded-2xl p-8"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
+        className="container mx-auto max-w-4xl"
       >
-        <h3 className="text-3xl font-bold text-slate-800 mb-3 text-center">
-          📚 หน่วยการเรียนรู้
-        </h3>
-        <p className="text-center text-slate-600 mb-6">
-          เลือกหน่วยการเรียนรู้ที่ต้องการสร้างเกม เพื่อให้ครูแต่ละคนทราบว่าตัวเองต้องทำเนื้อหาอะไร
-        </p>
+        <motion.h2
+          className="text-5xl font-bold text-slate-800 mb-4 text-center flex items-center justify-center gap-3"
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+        >
+          <TargetIcon size={48} className="text-blue-600" />
+          สร้างเกมของคุณ
+        </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {[
-            { unit: 'โรงเรียนของเรา', room: 'ห้องลูกเจี๊ยบ', location: 'หน่วยสระโบสถ์', color: 'from-red-400 to-pink-400' },
-            { unit: 'ร่างการของเรา', room: 'ห้องกระต่าย', location: 'หน่วยท่าหลวง', color: 'from-orange-400 to-amber-400' },
-            { unit: 'ฤดูกาลหรรษา', room: 'ห้องสิงโต', location: 'หน่วยโคกเจริญ', color: 'from-yellow-400 to-lime-400' },
-            { unit: 'ครอบครัวของฉัน', room: 'ห้องแพนด้า', location: 'หน่วยเมืองลพบุรี', color: 'from-green-400 to-emerald-400' },
-            { unit: 'อาหารดีมีประโยชน์', room: 'ห้องจิงโจ้', location: 'หน่วยบ้านหมี่', color: 'from-teal-400 to-cyan-400' },
-            { unit: 'สัตว์โลกน่ารัก', room: 'ห้องยีราฟ', location: 'หน่วยลำสนธิ', color: 'from-cyan-400 to-blue-400' },
-            { unit: 'ยานพาหนะและความปลอดภัย', room: 'ห้องเต่าน้อย', location: 'หน่วยท่าวุ้ง', color: 'from-blue-400 to-indigo-400' },
-            { unit: 'เรารักเมืองไทย', room: '', location: 'หน่วยพัฒนานิคม', color: 'from-indigo-400 to-purple-400' },
-            { unit: 'กีฬาเพื่อสุขภาพ', room: 'ห้องเพนกวิน', location: '', color: 'from-purple-400 to-fuchsia-400' },
-            { unit: 'ลพบุรีน่าอยู่', room: '', location: 'หน่วยหนองม่วง', color: 'from-pink-400 to-rose-400' },
-            { unit: 'หนูน้อยพอเพียง', room: 'โคกสำโรง', location: 'หน่วยชัยบาดาล', color: 'from-rose-400 to-red-400' },
-            { unit: 'อาชีพในฝัน', room: 'ห้องช้างน้อย', location: '', color: 'from-amber-400 to-orange-400' },
-          ].map((item, index) => (
-            <motion.div
-              key={index}
-              className={`bg-gradient-to-r ${item.color} p-1 rounded-xl`}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.05 }}
-              whileHover={{ scale: 1.02, y: -2 }}
+        <motion.p
+          className="text-center text-slate-600 text-lg mb-8"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          กรอกรายละเอียดเกมของคุณ แล้วคัดลอกไปวางที่ <span className="text-blue-600 font-bold">lovable.dev</span>
+        </motion.p>
+
+        {/* Learning Units Categories */}
+        <motion.div
+          className="mb-8 bg-gradient-to-br from-cyan-50 to-blue-50 border border-cyan-300 rounded-2xl p-8"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h3 className="text-3xl font-bold text-slate-800 mb-3 text-center">
+            📚 หน่วยการเรียนรู้
+          </h3>
+          <p className="text-center text-slate-600 mb-4">
+            เลือกหน่วยการเรียนรู้ที่ต้องการสร้างเกม เพื่อให้ครูแต่ละคนทราบว่าตัวเองต้องทำเนื้อหาอะไร
+          </p>
+
+          {/* Image Preview */}
+          <motion.div
+            className="mb-6 flex justify-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <motion.button
+              onClick={() => setShowImageModal(true)}
+              className="relative group overflow-hidden rounded-xl border-4 border-cyan-400 hover:border-cyan-500 transition-all shadow-lg hover:shadow-2xl"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <div className="bg-white rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <div className={`bg-gradient-to-br ${item.color} text-white font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 text-sm`}>
-                    {index + 1}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-slate-800 mb-1 text-base">
-                      {item.unit}
-                    </h4>
-                    <div className="space-y-1 text-sm">
-                      {item.room && (
-                        <p className="text-slate-600">
-                          <span className="font-semibold">🏫</span> {item.room}
-                        </p>
-                      )}
-                      {item.location && (
-                        <p className="text-slate-600">
-                          <span className="font-semibold">📍</span> {item.location}
-                        </p>
-                      )}
+              <img
+                src="/doc/S__166043725.jpg"
+                alt="หน่วยการเรียนรู้ทั้งหมด"
+                className="max-h-64 w-auto"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
+                <span className="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-600 px-4 py-2 rounded-full">
+                  🔍 คลิกเพื่อดูขนาดเต็ม
+                </span>
+              </div>
+            </motion.button>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { unit: 'โรงเรียนของเรา', room: 'ห้องลูกเจี๊ยบ', location: 'หน่วยสระโบสถ์', color: 'from-red-400 to-pink-400' },
+              { unit: 'ร่างการของเรา', room: 'ห้องกระต่าย', location: 'หน่วยท่าหลวง', color: 'from-orange-400 to-amber-400' },
+              { unit: 'ฤดูกาลหรรษา', room: 'ห้องสิงโต', location: 'หน่วยโคกเจริญ', color: 'from-yellow-400 to-lime-400' },
+              { unit: 'ครอบครัวของฉัน', room: 'ห้องแพนด้า', location: 'หน่วยเมืองลพบุรี', color: 'from-green-400 to-emerald-400' },
+              { unit: 'อาหารดีมีประโยชน์', room: 'ห้องจิงโจ้', location: 'หน่วยบ้านหมี่', color: 'from-teal-400 to-cyan-400' },
+              { unit: 'สัตว์โลกน่ารัก', room: 'ห้องยีราฟ', location: 'หน่วยลำสนธิ', color: 'from-cyan-400 to-blue-400' },
+              { unit: 'ยานพาหนะและความปลอดภัย', room: 'ห้องเต่าน้อย', location: 'หน่วยท่าวุ้ง', color: 'from-blue-400 to-indigo-400' },
+              { unit: 'เรารักเมืองไทย', room: '', location: 'หน่วยพัฒนานิคม', color: 'from-indigo-400 to-purple-400' },
+              { unit: 'กีฬาเพื่อสุขภาพ', room: 'ห้องเพนกวิน', location: '', color: 'from-purple-400 to-fuchsia-400' },
+              { unit: 'ลพบุรีน่าอยู่', room: '', location: 'หน่วยหนองม่วง', color: 'from-pink-400 to-rose-400' },
+              { unit: 'หนูน้อยพอเพียง', room: 'โคกสำโรง', location: 'หน่วยชัยบาดาล', color: 'from-rose-400 to-red-400' },
+              { unit: 'อาชีพในฝัน', room: 'ห้องช้างน้อย', location: '', color: 'from-amber-400 to-orange-400' },
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                className={`bg-gradient-to-r ${item.color} p-1 rounded-xl`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+                whileHover={{ scale: 1.02, y: -2 }}
+              >
+                <div className="bg-white rounded-lg p-4">
+                  <div className="flex items-start gap-3">
+                    <div className={`bg-gradient-to-br ${item.color} text-white font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 text-sm`}>
+                      {index + 1}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-bold text-slate-800 mb-1 text-base">
+                        {item.unit}
+                      </h4>
+                      <div className="space-y-1 text-sm">
+                        {item.room && (
+                          <p className="text-slate-600">
+                            <span className="font-semibold">🏫</span> {item.room}
+                          </p>
+                        )}
+                        {item.location && (
+                          <p className="text-slate-600">
+                            <span className="font-semibold">📍</span> {item.location}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
-      <motion.div
-        className="mb-8 bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-300 rounded-2xl p-8 text-center"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
-        <h3 className="text-3xl font-bold text-slate-800 mb-4 flex items-center justify-center gap-3">
-          💡 ยังไม่มีไอเดีย?
-        </h3>
-        <p className="text-slate-700 text-lg mb-4">
-          ไปดูไอเดียเกมที่ Section 4 เพื่อหาแรงบันดาลใจ!
-        </p>
-        <motion.a
-          href="#section4"
-          className="inline-block px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-full hover:shadow-xl transition-all"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+        <motion.div
+          className="mb-8 bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-300 rounded-2xl p-8 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
         >
-          ดูไอเดียเกม →
-        </motion.a>
-      </motion.div>
-
-      <motion.div
-        className="bg-gradient-to-br from-orange-100 to-red-100 border border-orange-300 rounded-2xl p-8 mb-6"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
-        <h3 className="text-2xl font-bold text-orange-700 mb-6">📝 กรอกข้อมูลเกม</h3>
-
-        <div className="space-y-6">
-          <div>
-            <label className="block text-slate-800 font-semibold mb-2">
-              สร้างอะไร :
-            </label>
-            <input
-              type="text"
-              value={formData.what}
-              onChange={(e) => setFormData({ ...formData, what: e.target.value })}
-              className="w-full px-4 py-3 bg-white text-slate-800 rounded-lg border border-slate-300 focus:border-orange-400 focus:outline-none transition-colors"
-              placeholder="เช่น สร้างเกม"
-            />
-          </div>
-
-          <div>
-            <label className="block text-slate-800 font-semibold mb-2">
-              วิธีการเล่น :
-            </label>
-            <input
-              type="text"
-              value={formData.how}
-              onChange={(e) => setFormData({ ...formData, how: e.target.value })}
-              className="w-full px-4 py-3 bg-white text-slate-800 rounded-lg border border-slate-300 focus:border-orange-400 focus:outline-none transition-colors"
-              placeholder="เช่น ลากเส้น ข้ามไป 2 ฝั่ง"
-            />
-          </div>
-
-          <div>
-            <label className="block text-slate-800 font-semibold mb-2">
-              เนื้อหา :
-            </label>
-            <input
-              type="text"
-              value={formData.content}
-              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              className="w-full px-4 py-3 bg-white text-slate-800 rounded-lg border border-slate-300 focus:border-orange-400 focus:outline-none transition-colors"
-              placeholder="เช่น จับคู่เลขไทยกับเลขอารบิก"
-            />
-          </div>
-
-          <div>
-            <label className="block text-slate-800 font-semibold mb-2">
-              องค์ประกอบ UI :
-            </label>
-            <textarea
-              value={formData.uiComponents}
-              onChange={(e) => setFormData({ ...formData, uiComponents: e.target.value })}
-              rows={8}
-              className="w-full px-4 py-3 bg-white text-slate-800 rounded-lg border border-slate-300 focus:border-orange-400 focus:outline-none transition-colors font-mono text-sm"
-              placeholder="เช่น 1) บนขวา บอกคะแนน&#10;2) มีเลข 5 คู่ ต่อ 1 หน้า&#10;3) มีสรุปคะแนนที่ได้"
-            />
-          </div>
-
-          <div>
-            <label className="block text-slate-800 font-semibold mb-2">
-              ฐานข้อมูล Lovable Cloud :
-            </label>
-            <textarea
-              value={formData.database}
-              onChange={(e) => setFormData({ ...formData, database: e.target.value })}
-              rows={3}
-              className="w-full px-4 py-3 bg-white text-slate-800 rounded-lg border border-slate-300 focus:border-cyan-400 focus:outline-none transition-colors"
-              placeholder="เช่น บันทึกข้อมูล สถิติการเล่นและจัดอันดับ"
-            />
-          </div>
-        </div>
-      </motion.div>
-
-      <motion.div
-        className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-300 rounded-2xl p-6 shadow-lg"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2 }}
-      >
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-          <h3 className="text-2xl font-bold text-green-700">👁️ ตัวอย่าง Prompt ที่จะถูกคัดลอก</h3>
-        </div>
-        <div className="bg-slate-800 rounded-xl p-5 mb-4 max-h-[500px] overflow-y-auto border-2 border-green-400 shadow-inner">
-          <pre className="text-green-300 text-sm whitespace-pre-wrap font-mono leading-relaxed">
-{generatePrompt()}
-          </pre>
-        </div>
-
-        <div className="flex justify-center">
-          <motion.button
-            onClick={handleCopy}
-            className={`inline-flex items-center gap-2 px-10 py-4 rounded-xl font-bold text-lg transition-all ${
-              copied
-                ? 'bg-green-500 text-white'
-                : 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-2xl'
-            }`}
-            whileHover={{ scale: copied ? 1 : 1.05 }}
+          <h3 className="text-3xl font-bold text-slate-800 mb-4 flex items-center justify-center gap-3">
+            💡 ยังไม่มีไอเดีย?
+          </h3>
+          <p className="text-slate-700 text-lg mb-4">
+            ไปดูไอเดียเกมที่ Section 4 เพื่อหาแรงบันดาลใจ!
+          </p>
+          <motion.a
+            href="#section4"
+            className="inline-block px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-full hover:shadow-xl transition-all"
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {copied ? (
-              <>
-                <CheckIcon size={24} />
-                คัดลอกแล้ว! นำไปวางที่ lovable.dev
-              </>
-            ) : (
-              <>
-                <CopyIcon size={24} />
-                คัดลอก Prompt ทั้งหมด
-              </>
-            )}
-          </motion.button>
-        </div>
-      </motion.div>
+            ดูไอเดียเกม →
+          </motion.a>
+        </motion.div>
 
-      <motion.div
-        className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.4 }}
-      >
-        <h4 className="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">
-          <InfoIcon size={24} className="text-blue-600" />
-          วิธีใช้งาน
-        </h4>
-        <ol className="text-slate-700 space-y-2 list-decimal list-inside">
-          <li>กรอกรายละเอียดเกมของคุณในฟอร์มด้านบน</li>
-          <li>กดปุ่ม "คัดลอก Prompt ทั้งหมด"</li>
-          <li>ไปที่ <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-700">lovable.dev</a></li>
-          <li>วาง (Paste) prompt ที่คัดลอกไว้</li>
-          <li>รอ AI สร้างเกมให้คุณ!</li>
-        </ol>
+        <motion.div
+          className="bg-gradient-to-br from-orange-100 to-red-100 border border-orange-300 rounded-2xl p-8 mb-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h3 className="text-2xl font-bold text-orange-700 mb-6">📝 กรอกข้อมูลเกม</h3>
+
+          <div className="space-y-6">
+            <div>
+              <label className="block text-slate-800 font-semibold mb-2">
+                สร้างอะไร :
+              </label>
+              <input
+                type="text"
+                value={formData.what}
+                onChange={(e) => setFormData({ ...formData, what: e.target.value })}
+                className="w-full px-4 py-3 bg-white text-slate-800 rounded-lg border border-slate-300 focus:border-orange-400 focus:outline-none transition-colors"
+                placeholder="เช่น สร้างเกม"
+              />
+            </div>
+
+            <div>
+              <label className="block text-slate-800 font-semibold mb-2">
+                วิธีการเล่น :
+              </label>
+              <input
+                type="text"
+                value={formData.how}
+                onChange={(e) => setFormData({ ...formData, how: e.target.value })}
+                className="w-full px-4 py-3 bg-white text-slate-800 rounded-lg border border-slate-300 focus:border-orange-400 focus:outline-none transition-colors"
+                placeholder="เช่น ลากเส้น ข้ามไป 2 ฝั่ง"
+              />
+            </div>
+
+            <div>
+              <label className="block text-slate-800 font-semibold mb-2">
+                เนื้อหา :
+              </label>
+              <input
+                type="text"
+                value={formData.content}
+                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                className="w-full px-4 py-3 bg-white text-slate-800 rounded-lg border border-slate-300 focus:border-orange-400 focus:outline-none transition-colors"
+                placeholder="เช่น จับคู่เลขไทยกับเลขอารบิก"
+              />
+            </div>
+
+            <div>
+              <label className="block text-slate-800 font-semibold mb-2">
+                องค์ประกอบ UI :
+              </label>
+              <textarea
+                value={formData.uiComponents}
+                onChange={(e) => setFormData({ ...formData, uiComponents: e.target.value })}
+                rows={8}
+                className="w-full px-4 py-3 bg-white text-slate-800 rounded-lg border border-slate-300 focus:border-orange-400 focus:outline-none transition-colors font-mono text-sm"
+                placeholder="เช่น 1) บนขวา บอกคะแนน&#10;2) มีเลข 5 คู่ ต่อ 1 หน้า&#10;3) มีสรุปคะแนนที่ได้"
+              />
+            </div>
+
+            <div>
+              <label className="block text-slate-800 font-semibold mb-2">
+                ฐานข้อมูล Lovable Cloud :
+              </label>
+              <textarea
+                value={formData.database}
+                onChange={(e) => setFormData({ ...formData, database: e.target.value })}
+                rows={3}
+                className="w-full px-4 py-3 bg-white text-slate-800 rounded-lg border border-slate-300 focus:border-cyan-400 focus:outline-none transition-colors"
+                placeholder="เช่น บันทึกข้อมูล สถิติการเล่นและจัดอันดับ"
+              />
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-300 rounded-2xl p-6 shadow-lg"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+            <h3 className="text-2xl font-bold text-green-700">👁️ ตัวอย่าง Prompt ที่จะถูกคัดลอก</h3>
+          </div>
+          <div className="bg-slate-800 rounded-xl p-5 mb-4 max-h-[500px] overflow-y-auto border-2 border-green-400 shadow-inner">
+            <pre className="text-green-300 text-sm whitespace-pre-wrap font-mono leading-relaxed">
+{generatePrompt()}
+            </pre>
+          </div>
+
+          <div className="flex justify-center">
+            <motion.button
+              onClick={handleCopy}
+              className={`inline-flex items-center gap-2 px-10 py-4 rounded-xl font-bold text-lg transition-all ${
+                copied
+                  ? 'bg-green-500 text-white'
+                  : 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-2xl'
+              }`}
+              whileHover={{ scale: copied ? 1 : 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {copied ? (
+                <>
+                  <CheckIcon size={24} />
+                  คัดลอกแล้ว! นำไปวางที่ lovable.dev
+                </>
+              ) : (
+                <>
+                  <CopyIcon size={24} />
+                  คัดลอก Prompt ทั้งหมด
+                </>
+              )}
+            </motion.button>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+        >
+          <h4 className="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">
+            <InfoIcon size={24} className="text-blue-600" />
+            วิธีใช้งาน
+          </h4>
+          <ol className="text-slate-700 space-y-2 list-decimal list-inside">
+            <li>กรอกรายละเอียดเกมของคุณในฟอร์มด้านบน</li>
+            <li>กดปุ่ม "คัดลอก Prompt ทั้งหมด"</li>
+            <li>ไปที่ <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-700">lovable.dev</a></li>
+            <li>วาง (Paste) prompt ที่คัดลอกไว้</li>
+            <li>รอ AI สร้างเกมให้คุณ!</li>
+          </ol>
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </>
   );
 }
