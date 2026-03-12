@@ -56,13 +56,18 @@ export default function Section5References() {
       }
 
       // Generate QR code with high error correction for logo overlay
+      // Force PNG format (not JPEG) by using type and rendererOpts
       const url = await QRCode.toDataURL(qrData, {
         errorCorrectionLevel: 'H',
+        type: 'image/png',
         width: 1200,
         margin: 2,
         color: {
           dark: '#1e293b',
           light: '#ffffff'
+        },
+        rendererOpts: {
+          quality: 1.0  // Maximum quality for PNG
         }
       });
 

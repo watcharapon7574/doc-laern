@@ -139,6 +139,73 @@ ${lovablePrompt}`;
         กรอกรายละเอียดเกมของคุณ แล้วคัดลอกไปวางที่ <span className="text-blue-600 font-bold">lovable.dev</span>
       </motion.p>
 
+      {/* Learning Units Categories */}
+      <motion.div
+        className="mb-8 bg-gradient-to-br from-cyan-50 to-blue-50 border border-cyan-300 rounded-2xl p-8"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <h3 className="text-3xl font-bold text-slate-800 mb-3 text-center">
+          📚 หน่วยการเรียนรู้
+        </h3>
+        <p className="text-center text-slate-600 mb-6">
+          เลือกหน่วยการเรียนรู้ที่ต้องการสร้างเกม เพื่อให้ครูแต่ละคนทราบว่าตัวเองต้องทำเนื้อหาอะไร
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[
+            { unit: 'โรงเรียนของเรา', room: 'ห้องลูกเจี๊ยบ', location: 'หน่วยสระโบสถ์', color: 'from-red-400 to-pink-400' },
+            { unit: 'ร่างการของเรา', room: 'ห้องกระต่าย', location: 'หน่วยท่าหลวง', color: 'from-orange-400 to-amber-400' },
+            { unit: 'ฤดูกาลหรรษา', room: 'ห้องสิงโต', location: 'หน่วยโคกเจริญ', color: 'from-yellow-400 to-lime-400' },
+            { unit: 'ครอบครัวของฉัน', room: 'ห้องแพนด้า', location: 'หน่วยเมืองลพบุรี', color: 'from-green-400 to-emerald-400' },
+            { unit: 'อาหารดีมีประโยชน์', room: 'ห้องจิงโจ้', location: 'หน่วยบ้านหมี่', color: 'from-teal-400 to-cyan-400' },
+            { unit: 'สัตว์โลกน่ารัก', room: 'ห้องยีราฟ', location: 'หน่วยลำสนธิ', color: 'from-cyan-400 to-blue-400' },
+            { unit: 'ยานพาหนะและความปลอดภัย', room: 'ห้องเต่าน้อย', location: 'หน่วยท่าวุ้ง', color: 'from-blue-400 to-indigo-400' },
+            { unit: 'เรารักเมืองไทย', room: '', location: 'หน่วยพัฒนานิคม', color: 'from-indigo-400 to-purple-400' },
+            { unit: 'กีฬาเพื่อสุขภาพ', room: 'ห้องเพนกวิน', location: '', color: 'from-purple-400 to-fuchsia-400' },
+            { unit: 'ลพบุรีน่าอยู่', room: '', location: 'หน่วยหนองม่วง', color: 'from-pink-400 to-rose-400' },
+            { unit: 'หนูน้อยพอเพียง', room: 'โคกสำโรง', location: 'หน่วยชัยบาดาล', color: 'from-rose-400 to-red-400' },
+            { unit: 'อาชีพในฝัน', room: 'ห้องช้างน้อย', location: '', color: 'from-amber-400 to-orange-400' },
+          ].map((item, index) => (
+            <motion.div
+              key={index}
+              className={`bg-gradient-to-r ${item.color} p-1 rounded-xl`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.05 }}
+              whileHover={{ scale: 1.02, y: -2 }}
+            >
+              <div className="bg-white rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <div className={`bg-gradient-to-br ${item.color} text-white font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 text-sm`}>
+                    {index + 1}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-slate-800 mb-1 text-base">
+                      {item.unit}
+                    </h4>
+                    <div className="space-y-1 text-sm">
+                      {item.room && (
+                        <p className="text-slate-600">
+                          <span className="font-semibold">🏫</span> {item.room}
+                        </p>
+                      )}
+                      {item.location && (
+                        <p className="text-slate-600">
+                          <span className="font-semibold">📍</span> {item.location}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
       <motion.div
         className="mb-8 bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-300 rounded-2xl p-8 text-center"
         initial={{ opacity: 0, y: 20 }}
