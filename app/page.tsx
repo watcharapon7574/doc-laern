@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Section1Slide from '@/components/Section1Slide';
 import Section2Examples from '@/components/Section2Examples';
@@ -8,6 +9,8 @@ import Section4Form from '@/components/Section4Form';
 import Section5References from '@/components/Section5References';
 
 export default function Home() {
+  const [selectedIdea, setSelectedIdea] = useState<{what: string, how: string} | null>(null);
+
   const sections = [
     { id: 'section1', title: 'สไลด์นำเสนอ', bgColor: 'from-blue-500 to-purple-600' },
     { id: 'section2', title: 'ตัวอย่างเกม', bgColor: 'from-purple-600 to-pink-600' },
@@ -15,6 +18,12 @@ export default function Home() {
     { id: 'section4', title: 'ไอเดียเกม', bgColor: 'from-red-600 to-orange-600' },
     { id: 'section5', title: 'แหล่งอ้างอิง', bgColor: 'from-orange-600 to-yellow-600' },
   ];
+
+  const handleIdeaClick = (ideaText: string, mechanicTitle: string) => {
+    setSelectedIdea({ what: ideaText, how: mechanicTitle });
+    // Scroll to form section
+    document.getElementById('game-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -120,12 +129,12 @@ export default function Home() {
 
       {/* Section 3: Form */}
       <section id="section3" className="min-h-screen py-20 px-4 bg-gradient-to-br from-pink-50 to-red-50">
-        <Section4Form />
+        <Section4Form selectedIdea={selectedIdea} onIdeaApplied={() => setSelectedIdea(null)} />
       </section>
 
       {/* Section 4: Game Ideas */}
       <section id="section4" className="min-h-screen py-20 px-4 bg-gradient-to-br from-red-50 to-orange-50">
-        <Section3Ideas />
+        <Section3Ideas onIdeaClick={handleIdeaClick} />
       </section>
 
       {/* Section 5: References */}

@@ -1,10 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TargetIcon, CopyIcon, CheckIcon, InfoIcon } from './icons';
 
-export default function Section4Form() {
+interface Section4FormProps {
+  selectedIdea?: {what: string, how: string} | null;
+  onIdeaApplied?: () => void;
+}
+
+export default function Section4Form({ selectedIdea, onIdeaApplied }: Section4FormProps) {
   const defaultExample = `ตัวอย่างที่ 1
 สร้างอะไร : สร้างเกม
 วิธีการเล่น : ลากเส้น ข้ามไป 2 ฝั่ง
@@ -32,6 +37,21 @@ export default function Section4Form() {
 
   const [copied, setCopied] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
+
+  // Auto-fill form when idea is selected
+  useEffect(() => {
+    if (selectedIdea) {
+      setFormData(prev => ({
+        ...prev,
+        what: selectedIdea.what,
+        how: selectedIdea.how
+      }));
+      // Call callback to clear the selection
+      if (onIdeaApplied) {
+        onIdeaApplied();
+      }
+    }
+  }, [selectedIdea, onIdeaApplied]);
 
   const lovablePrompt = `# Technical Requirements
 
@@ -291,6 +311,7 @@ ${lovablePrompt}`;
         </motion.div>
 
         <motion.div
+          id="game-form"
           className="bg-gradient-to-br from-orange-100 to-red-100 border border-orange-300 rounded-2xl p-8 mb-6"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

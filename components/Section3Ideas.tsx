@@ -3,7 +3,11 @@
 import { motion } from 'framer-motion';
 import { LightbulbIcon, DownloadIcon, RocketIcon } from './icons';
 
-export default function Section3Ideas() {
+interface Section3IdeasProps {
+  onIdeaClick?: (ideaText: string, mechanicTitle: string) => void;
+}
+
+export default function Section3Ideas({ onIdeaClick }: Section3IdeasProps) {
   const categories = [
     {
       title: "👆 1. การแตะ (Tap)",
@@ -216,9 +220,24 @@ export default function Section3Ideas() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.05 }}
-                    className={`px-3 py-2 rounded-lg border ${getColorClass(idea.color)}`}
                   >
-                    <span>{idea.text}</span>
+                    <motion.button
+                      onClick={() => {
+                        if (onIdeaClick) {
+                          // Extract mechanic from title (remove emoji, number, and dot)
+                          // Example: "👆 1. การแตะ (Tap)" -> "การแตะ (Tap)"
+                          const mechanic = category.title.replace(/^.+?\d+\.\s*/, '');
+                          // Send game name without "สร้างเกม" prefix
+                          onIdeaClick(idea.text, mechanic);
+                        }
+                      }}
+                      className={`w-full text-left px-3 py-2 rounded-lg border ${getColorClass(idea.color)} hover:shadow-lg transition-all cursor-pointer`}
+                      whileHover={{ scale: 1.02, x: 5 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <span>{idea.text}</span>
+                      <span className="ml-2 text-xs opacity-60">👆 คลิกเพื่อใช้</span>
+                    </motion.button>
                   </motion.li>
                 ))}
               </ul>
