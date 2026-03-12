@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { LinkIcon, DownloadIcon, InfoIcon } from './icons';
 import QRCode from 'qrcode';
@@ -9,6 +9,7 @@ export default function Section5References() {
   const [qrInput, setQrInput] = useState('');
   const [qrDataURL, setQrDataURL] = useState('');
   const [qrType, setQrType] = useState<'url' | 'text' | 'email' | 'phone' | 'wifi'>('url');
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const references = [
     {
@@ -35,7 +36,7 @@ export default function Section5References() {
   ];
 
   const generateQRCode = async () => {
-    if (!qrInput.trim()) return;
+    if (!qrInput.trim() || !canvasRef.current) return;
 
     try {
       let qrData = qrInput;
@@ -54,27 +55,62 @@ export default function Section5References() {
         }
       }
 
-      // Generate QR code with high error correction for logo overlay
-      // toDataURL always outputs PNG format
-      const url = await QRCode.toDataURL(qrData, {
+      // Generate QR code to canvas with high quality settings
+      // Using 800px instead of 1200px for better Canva compatibility
+      await QRCode.toCanvas(canvasRef.current, qrData, {
         errorCorrectionLevel: 'H',
-        width: 1200,
-        margin: 2
+        width: 800,
+        margin: 4,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
+        }
       });
 
-      setQrDataURL(url);
+      // Convert canvas to uncompressed PNG data URL
+      // Using toDataURL directly from canvas ensures proper PNG format
+      const dataUrl = canvasRef.current.toDataURL('image/png');
+      setQrDataURL(dataUrl);
+
     } catch (error) {
       console.error('Error generating QR code:', error);
     }
   };
 
-  const downloadQR = () => {
-    if (!qrDataURL) return;
+  const downloadQR = async () => {
+    if (!qrDataURL || !canvasRef.current) return;
 
-    const link = document.createElement('a');
-    link.download = 'qrcode.png';
-    link.href = qrDataURL;
-    link.click();
+    // Create a new canvas to ensure clean PNG without metadata issues
+    const cleanCanvas = document.createElement('canvas');
+    const ctx = cleanCanvas.getContext('2d', {
+      alpha: false,
+      colorSpace: 'srgb'
+    });
+
+    if (!ctx) return;
+
+    // Set dimensions
+    cleanCanvas.width = canvasRef.current.width;
+    cleanCanvas.height = canvasRef.current.height;
+
+    // Fill with white background first (important for Canva)
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, cleanCanvas.width, cleanCanvas.height);
+
+    // Draw the QR code
+    ctx.drawImage(canvasRef.current, 0, 0);
+
+    // Convert to blob with maximum quality
+    cleanCanvas.toBlob((blob) => {
+      if (blob) {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = 'qrcode.png';
+        link.href = url;
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+    }, 'image/png');
   };
 
   const qrTypes = [
@@ -124,6 +160,9 @@ export default function Section5References() {
         <p className="text-center text-slate-600 mb-6">
           QR Code ถูกสร้างบนเบราว์เซอร์ของคุณโดยตรง ไม่ผ่านเซิร์ฟเวอร์ ดังนั้นจึงไม่มีวันหมดอายุ
         </p>
+
+        {/* Hidden canvas for QR code generation */}
+        <canvas ref={canvasRef} className="hidden" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-4">

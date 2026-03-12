@@ -305,16 +305,19 @@ ${lovablePrompt}`;
       </motion.div>
 
       <motion.div
-        className="bg-white border border-green-300 rounded-2xl p-6"
+        className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-300 rounded-2xl p-6 shadow-lg"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
       >
-        <h3 className="text-2xl font-bold text-green-700 mb-4">👁️ ตัวอย่าง Prompt ที่จะถูกคัดลอก</h3>
-        <div className="bg-slate-50 rounded-lg p-4 mb-4 max-h-96 overflow-y-auto border border-slate-200">
-          <pre className="text-slate-700 text-sm whitespace-pre-wrap font-mono">
-            {generatePrompt()}
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+          <h3 className="text-2xl font-bold text-green-700">👁️ ตัวอย่าง Prompt ที่จะถูกคัดลอก</h3>
+        </div>
+        <div className="bg-slate-800 rounded-xl p-5 mb-4 max-h-[500px] overflow-y-auto border-2 border-green-400 shadow-inner">
+          <pre className="text-green-300 text-sm whitespace-pre-wrap font-mono leading-relaxed">
+{generatePrompt()}
           </pre>
         </div>
 
