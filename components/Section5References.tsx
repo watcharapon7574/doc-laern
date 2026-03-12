@@ -58,7 +58,7 @@ export default function Section5References() {
       // Generate QR code with high error correction for logo overlay
       const url = await QRCode.toDataURL(qrData, {
         errorCorrectionLevel: 'H',
-        width: 400,
+        width: 1200,
         margin: 2,
         color: {
           dark: '#1e293b',
