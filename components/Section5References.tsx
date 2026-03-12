@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { LinkIcon, DownloadIcon, InfoIcon } from './icons';
 import QRCode from 'qrcode';
@@ -9,7 +9,6 @@ export default function Section5References() {
   const [qrInput, setQrInput] = useState('');
   const [qrDataURL, setQrDataURL] = useState('');
   const [qrType, setQrType] = useState<'url' | 'text' | 'email' | 'phone' | 'wifi'>('url');
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const references = [
     {
@@ -56,19 +55,11 @@ export default function Section5References() {
       }
 
       // Generate QR code with high error correction for logo overlay
-      // Force PNG format (not JPEG) by using type and rendererOpts
+      // toDataURL always outputs PNG format
       const url = await QRCode.toDataURL(qrData, {
         errorCorrectionLevel: 'H',
-        type: 'image/png',
         width: 1200,
-        margin: 2,
-        color: {
-          dark: '#1e293b',
-          light: '#ffffff'
-        },
-        rendererOpts: {
-          quality: 1.0  // Maximum quality for PNG
-        }
+        margin: 2
       });
 
       setQrDataURL(url);
