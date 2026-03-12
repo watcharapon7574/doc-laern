@@ -43,7 +43,7 @@ export default function Section4Form({ selectedIdea, onIdeaApplied }: Section4Fo
     if (selectedIdea) {
       setFormData(prev => ({
         ...prev,
-        what: selectedIdea.what,
+        what: `สร้างเกม ${selectedIdea.what}`,
         how: selectedIdea.how
       }));
       // Call callback to clear the selection
